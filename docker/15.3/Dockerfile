@@ -44,7 +44,6 @@ run mkdir -p /labkey/configs
 run mkdir -p /labkey/svn
 
 # download latest build
-http://teamcity.labkey.org/repository/download/LabKey_LabkeyDISCVR153_Installers/302029:id/discvr/LabKey15.3DISCVR-42302-discvr-bin.tar.gz
 RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/${GZ_PREFIX}-{build.number}-${DIST_NAME}-bin.tar.gz
 RUN mv ./teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/*.gz ./
 RUN rm -Rf ./teamcity.labkey.org
