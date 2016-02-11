@@ -4,14 +4,17 @@
 # sequence tools used by the pipelines
 #
 
-from ubuntu:14.04
+from phusion/baseimage
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV BRANCH LabkeyDISCVR152_Installers
-ENV GZ_PREFIX LabKey15.2DISCVR
-ENV DIST_NAME onprc
-ENV SVN_BRANCH discvr15.2
+ENV TC_PROJECT LabKey_LabkeyDISCVR153_Installers
+ENV GZ_PREFIX LabKey15.3DISCVR
+ENV DIST_NAME discvr
+ENV SVN_BRANCH discvr15.3
+
+#using revision is a cheap way to force the Dockerfile to increment when the shell script changes.  eventually that script should be more tightly integrated with docker.
+#ENV SVN_REVISION 41330
 
 ENV LK_HOME /labkey
 
@@ -41,8 +44,9 @@ run mkdir -p /labkey/configs
 run mkdir -p /labkey/svn
 
 # download latest build
-RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.org/guestAuth/repository/download/${BRANCH}/.lastSuccessful/${DIST_NAME}/${GZ_PREFIX}-{build.number}-${DIST_NAME}-bin.tar.gz
-RUN mv ./teamcity.labkey.org/guestAuth/repository/download/${BRANCH}/.lastSuccessful/onprc/*.gz ./
+http://teamcity.labkey.org/repository/download/LabKey_LabkeyDISCVR153_Installers/302029:id/discvr/LabKey15.3DISCVR-42302-discvr-bin.tar.gz
+RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/${GZ_PREFIX}-{build.number}-${DIST_NAME}-bin.tar.gz
+RUN mv ./teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/*.gz ./
 RUN rm -Rf ./teamcity.labkey.org
 
 RUN (GZ=$(ls -tr | grep '^LabKey.*\.gz$' | tail -n -1); \
@@ -58,11 +62,12 @@ RUN (GZ=$(ls -tr | grep '^LabKey.*\.gz$' | tail -n -1); \
 
 #TODO: bootstrap JAR?
 
-#this is a hack for now.  eventually this script should be merged into the dockerfile
-#RUN svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/branches/${SVN_BRANCH}/externalModules/labModules/SequenceAnalysis/pipeline_code /labkey/svn/trunk/pipeline_code/
-RUN svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/trunk/externalModules/labModules/SequenceAnalysis/pipeline_code /labkey/svn/trunk/pipeline_code/
-RUN ${LK_HOME}/svn/trunk/pipeline_code/sequence_tools_install.sh -d ${LK_HOME}
+#-r SVN_REVISION
+RUN svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/branches/${SVN_BRANCH}/externalModules/labModules/SequenceAnalysis/pipeline_code ${LK_HOME}/svn/
+RUN ${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME}
 
 #note: need to sort out users/permissions
 #-u labkey
 #chown -R labkey:labkey $LK_HOME
+
+
