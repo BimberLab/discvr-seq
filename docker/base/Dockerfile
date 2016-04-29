@@ -39,8 +39,7 @@ ENV PATH $PATH:$JAVA_HOME/bin
 
 # this is not the ideal way to install all these tools, but the code is currently shared by non-docker usages
 RUN svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/branches/${SVN_BRANCH}/externalModules/labModules/SequenceAnalysis/pipeline_code ${LK_HOME}/svn/
-RUN ${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME}
-RUN rm -Rf ${LK_HOME}/tool_src
+RUN ${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME} -c
 
 # Clean up
 RUN rm -rf /var/lib/apt/lists/*
