@@ -30,7 +30,6 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
 	add-apt-repository -y ppa:webupd8team/java && \
 	apt-get update && \
 	apt-get install -y oracle-java8-installer && \
-	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /var/cache/oracle-jdk8-installer
 
 #rm -rf /var/lib/apt/lists/* && \
@@ -41,6 +40,10 @@ ENV PATH $PATH:$JAVA_HOME/bin
 # this is not the ideal way to install all these tools, but the code is currently shared by non-docker usages
 RUN svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/branches/${SVN_BRANCH}/externalModules/labModules/SequenceAnalysis/pipeline_code ${LK_HOME}/svn/
 RUN ${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME}
+RUN rm -Rf ${LK_HOME}/tool_src
+
+# Clean up
+RUN rm -rf /var/lib/apt/lists/*
 
 #note: need to sort out users/permissions
 #-u labkey
