@@ -24,8 +24,8 @@ RUN mkdir -p /labkey/svn
 # Sequence tools are installed using a separate shell script since this config is shared by non-docker usages
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
 	add-apt-repository -y ppa:webupd8team/java && \
-	apt-get update \
-	apt-get -y -q install wget tar unzip subversion wget python-software-properties software-properties-common oracle-java8-installer \
+	apt-get update && \
+	apt-get -y -q install wget tar unzip subversion wget python-software-properties software-properties-common oracle-java8-installer && \
 	rm -rf /var/cache/oracle-jdk8-installer && \
 	svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/branches/${SVN_BRANCH}/externalModules/labModules/SequenceAnalysis/pipeline_code ${LK_HOME}/svn/ && \
 	${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME} -c && \
