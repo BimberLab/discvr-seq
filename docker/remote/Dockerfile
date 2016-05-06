@@ -4,7 +4,7 @@
 # sequence tools used by the pipelines
 #
 
-from bbimber/discvr-seq
+from bbimber/discvr-seq:16.1
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
@@ -27,10 +27,10 @@ ENV LK_HOME /labkey
 # Consider adding --add-host activemq:XXX.XXX.XXX.XXX, depending on how pipelineConfig.xml is set up
 # 
 
-run mkdir -p /labkey/
-run mkdir -p /labkey/configs
+run mkdir -p /labkey/ && mkdir -p /labkey/configs && mkdir -p /labkey/logs
 
 # download latest build
+# Note: the final line is intended to force the modules/webapp dirs to be exploded
 RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/${GZ_PREFIX}-{build.number}-${DIST_NAME}-bin.tar.gz && \
 	mv ./teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/*.gz ./ && \
 	rm -Rf ./teamcity.labkey.org && \
@@ -41,6 +41,11 @@ RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.o
 	cp -R ${DIR}/modules $LK_HOME && \
 	cp -R ${DIR}/labkeywebapp $LK_HOME && \
 	cp -R ${DIR}/pipeline-lib $LK_HOME && \
+	cp -R ${DIR}/labkeyBootstrap.jar $LK_HOME && \
 	mkdir -p /labkey/apps/tomcat/lib/ && \
 	cp -f ${DIR}/tomcat-lib/*.jar /labkey/apps/tomcat/lib/ && \
-	rm -rf ${DIR}
+	cd $LK_HOME && \
+	rm -rf ${DIR} && \
+	rm -Rf $GZ && \
+	java -cp $JAVA_HOME/lib/tools.jar:$LK_HOME/labkeyBootstrap.jar org.labkey.bootstrap.ClusterBootstrap
+
