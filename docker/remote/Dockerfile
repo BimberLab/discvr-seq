@@ -41,7 +41,7 @@ RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.o
 	cp -R ${DIR}/modules $LK_HOME && \
 	cp -R ${DIR}/labkeywebapp $LK_HOME && \
 	cp -R ${DIR}/pipeline-lib $LK_HOME && \
-	cp -R ${DIR}/labkeyBootstrap.jar $LK_HOME && \
+	cp -R ${DIR}/tomcat-lib/labkeyBootstrap.jar $LK_HOME && \
 	mkdir -p /labkey/apps/tomcat/lib/ && \
 	cp -f ${DIR}/tomcat-lib/*.jar /labkey/apps/tomcat/lib/ && \
 	cd $LK_HOME && \
