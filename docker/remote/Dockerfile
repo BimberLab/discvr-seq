@@ -1,4 +1,5 @@
 # DOCKER-VERSION 1.0.0
+# DOCKER-VERSION 1.0.0
 #
 # Dockerfile for remote pipeline DISCVR-Seq Servers.  This will install remote LabKey Server code in addition to various
 # sequence tools used by the pipelines
@@ -30,7 +31,6 @@ ENV LK_HOME /labkey
 run mkdir -p /labkey/ && mkdir -p /labkey/configs && mkdir -p /labkey/logs
 
 # download latest build
-# Note: the final line is intended to force the modules/webapp dirs to be exploded
 RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/${GZ_PREFIX}-{build.number}-${DIST_NAME}-bin.tar.gz && \
 	mv ./teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/*.gz ./ && \
 	rm -Rf ./teamcity.labkey.org && \
@@ -46,6 +46,5 @@ RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.o
 	cp -f ${DIR}/tomcat-lib/*.jar /labkey/apps/tomcat/lib/ && \
 	cd $LK_HOME && \
 	rm -rf ${DIR} && \
-	rm -Rf $GZ && \
-	java -cp $JAVA_HOME/lib/tools.jar:$LK_HOME/labkeyBootstrap.jar org.labkey.bootstrap.ClusterBootstrap
+	rm -Rf $GZ
 
