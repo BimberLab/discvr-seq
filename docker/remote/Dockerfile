@@ -5,14 +5,14 @@
 # sequence tools used by the pipelines
 #
 
-from bbimber/discvr-seq:16.1
+from bbimber/discvr-seq:16.2
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV TC_PROJECT LabKey_DISCVR161_Installers
-ENV GZ_PREFIX LabKey16.1DISCVR
+ENV TC_PROJECT LabKey_DISCVR162_Installers
+ENV GZ_PREFIX LabKey16.2DISCVR
 ENV DIST_NAME discvr
-ENV SVN_BRANCH discvr16.1
+ENV SVN_BRANCH discvr16.2
 ENV LK_HOME /labkey
 
 #

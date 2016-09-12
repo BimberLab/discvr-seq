@@ -4,7 +4,7 @@
 # sequence tools used by the pipelines
 #
 
-from bbimber/discvr-seq:16.1server
+from bbimber/discvr-seq:16.2server
 maintainer bbimber@gmail.com
 
 # the only reason for this command is to pre-explode all the modules to save time when running the container
