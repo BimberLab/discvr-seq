@@ -36,7 +36,6 @@ RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.o
 	GZ=$(ls -tr | grep '^LabKey.*\.gz$' | tail -n -1) && \
 	tar -xf $GZ && \
 	DIR=$(echo $GZ | sed -e "s/.tar.gz$//") && \
-	cp -R ${DIR}/bin $LK_HOME && \
 	cp -R ${DIR}/modules $LK_HOME && \
 	cp -R ${DIR}/labkeywebapp $LK_HOME && \
 	cp -R ${DIR}/pipeline-lib $LK_HOME && \
