@@ -1,5 +1,4 @@
 # DOCKER-VERSION 1.0.0
-# DOCKER-VERSION 1.0.0
 #
 # Dockerfile for remote pipeline DISCVR-Seq Servers.  This will install remote LabKey Server code in addition to various
 # sequence tools used by the pipelines

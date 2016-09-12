@@ -27,8 +27,11 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
 	apt-get update && \
 	apt-get -y -q install wget tar unzip subversion wget python-software-properties software-properties-common oracle-java8-installer && \
 	rm -rf /var/cache/oracle-jdk8-installer && \
+	cd ${LK_HOME} && \
 	svn co --username cpas --password cpas --no-auth-cache https://hedgehog.fhcrc.org/tor/stedi/branches/${SVN_BRANCH}/externalModules/labModules/SequenceAnalysis/pipeline_code ${LK_HOME}/svn/ && \
-	${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME} -c && \
+	chmod +x ${LK_HOME}/svn/sequence_tools_install.sh && \
+	sed -i 's/\r$//' ${LK_HOME}/svn/sequence_tools_install.sh && \
+	bash ${LK_HOME}/svn/sequence_tools_install.sh -d ${LK_HOME} -c && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 	apt-get clean -y
 
