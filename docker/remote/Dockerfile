@@ -44,5 +44,7 @@ RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.o
 	cp -f ${DIR}/tomcat-lib/*.jar /labkey/apps/tomcat/lib/ && \
 	cd $LK_HOME && \
 	rm -rf ${DIR} && \
-	rm -Rf $GZ
+	rm -Rf $GZ && \
+	cd $LK_HOME && \
+	java -cp $JAVA_HOME/lib/tools.jar:$LK_HOME/labkeyBootstrap.jar org.labkey.bootstrap.ClusterBootstrap
 
