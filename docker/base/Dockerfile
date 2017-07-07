@@ -7,10 +7,10 @@ from phusion/baseimage
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV TC_PROJECT LabKey_DISCVR161_Installers
-ENV GZ_PREFIX LabKey16.1DISCVR
+ENV TC_PROJECT LabKey_DISCVR171_Installers
+ENV GZ_PREFIX LabKey17.1DISCVR
 ENV DIST_NAME discvr
-ENV SVN_BRANCH discvr16.1
+ENV SVN_BRANCH discvr17.1
 ENV LK_HOME /labkey
 
 #
