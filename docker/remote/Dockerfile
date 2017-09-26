@@ -8,10 +8,10 @@ from bbimber/discvr-seq
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV TC_PROJECT LabKey_DISCVR161_Installers
-ENV GZ_PREFIX LabKey16.1DISCVR
+ENV TC_PROJECT LabKey_DISCVR172_Installers
+ENV GZ_PREFIX Labkey17.2
 ENV DIST_NAME discvr
-ENV SVN_BRANCH discvr16.1
+ENV SVN_BRANCH discvr17.2
 ENV LK_HOME /labkey
 
 #
@@ -25,7 +25,7 @@ RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.o
 RUN mv ./teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/*.gz ./
 RUN rm -Rf ./teamcity.labkey.org
 
-RUN (GZ=$(ls -tr | grep '^LabKey.*\.gz$' | tail -n -1); \
+RUN (GZ=$(ls -tr | grep "^${GZ_PREFIX}.*\.gz$" | tail -n -1); \
      tar -xf $GZ; \
      DIR=$(echo $GZ | sed -e "s/.tar.gz$//"); \
      cp -R ${DIR}/bin $LK_HOME; \
