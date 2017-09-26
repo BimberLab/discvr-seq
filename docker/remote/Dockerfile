@@ -4,14 +4,14 @@
 # sequence tools used by the pipelines
 #
 
-from bbimber/discvr-seq:16.2
+from bbimber/discvr-seq:17.2
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV TC_PROJECT LabKey_DISCVR162_Installers
-ENV GZ_PREFIX LabKey16.2DISCVR
+ENV TC_PROJECT LabKey_Discvr172_Installers
+ENV GZ_PREFIX Labkey17.2
 ENV DIST_NAME discvr
-ENV SVN_BRANCH discvr16.2
+ENV SVN_BRANCH discvr17.2
 ENV LK_HOME /labkey
 
 #
@@ -33,7 +33,7 @@ run mkdir -p /labkey/ && mkdir -p /labkey/configs && mkdir -p /labkey/logs
 RUN wget -r --trust-server-names --no-check-certificate http://teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/${GZ_PREFIX}-{build.number}-${DIST_NAME}-bin.tar.gz && \
 	mv ./teamcity.labkey.org/guestAuth/repository/download/${TC_PROJECT}/.lastSuccessful/${DIST_NAME}/*.gz ./ && \
 	rm -Rf ./teamcity.labkey.org && \
-	GZ=$(ls -tr | grep '^LabKey.*\.gz$' | tail -n -1) && \
+	GZ=$(ls -tr | grep "^${GZ_PREFIX}.*\.gz$" | tail -n -1) && \
 	tar -xf $GZ && \
 	DIR=$(echo $GZ | sed -e "s/.tar.gz$//") && \
 	cp -R ${DIR}/modules $LK_HOME && \

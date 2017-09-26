@@ -7,10 +7,8 @@ from phusion/baseimage
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV TC_PROJECT LabKey_DISCVR162_Installers
-ENV GZ_PREFIX LabKey16.2DISCVR
 ENV DIST_NAME discvr
-ENV SVN_BRANCH discvr16.2
+ENV SVN_BRANCH discvr17.2
 ENV LK_HOME /labkey
 
 #
@@ -22,8 +20,10 @@ RUN mkdir -p /labkey/svn
 
 # Do all updates and install java in single step to slim down image
 # Sequence tools are installed using a separate shell script since this config is shared by non-docker usages
+
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
 	add-apt-repository -y ppa:webupd8team/java && \
+	echo "deb http://cran.r-project.org/bin/linux/ubuntu precise/" > /etc/apt/sources.list.d/cran.list &&
 	apt-get update && \
 	apt-get -y -q install wget tar unzip subversion wget python-software-properties software-properties-common oracle-java8-installer && \
 	rm -rf /var/cache/oracle-jdk8-installer && \
