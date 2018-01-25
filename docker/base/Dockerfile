@@ -7,7 +7,7 @@ from phusion/baseimage
 maintainer bbimber@gmail.com
 
 # these will vary by LabKey version:
-ENV SVN_BRANCH discvr17.2
+ENV SVN_BRANCH discvr17.3
 ENV LK_HOME /labkey
 
 #
